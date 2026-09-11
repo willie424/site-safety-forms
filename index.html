@@ -111,30 +111,15 @@
         </div>
       </div>
 
-      <!-- 四、危害防止措施（可收合摺疊） -->
-      <details class="border rounded-lg p-3 bg-slate-50 cursor-pointer">
-        <summary class="font-bold text-sm text-slate-700">點擊查看：四、各項危害詳細防止措施條款</summary>
-        <div class="mt-3 text-xs text-slate-600 space-y-3 leading-relaxed max-h-80 overflow-y-auto border-t pt-2 pr-2">
-          <p><strong>(一) 墜落、滾落：</strong>依「高架作業勞工保護措施標準」辦理；距2M以上設置護欄/護蓋；必要時設安全網；勞工身心不適或酒醉嚴禁作業。</p>
-          <p><strong>(二) 感電：</strong>電工具使用前檢查；必經漏電斷路器；臨近高壓電線申請絕緣套管；自行拉設之電線應架高並加掛標示。</p>
-          <p><strong>(三) 崩(倒)塌：</strong>支撐材料依荷重設計；物料平整堆放並限制高度，確保穩固性。</p>
-          <p><strong>(四) 物體飛落：</strong>高處作業整頓環境；配戴安全帽並扣好顎帶；設置擋版/防護網嚴禁向下丟擲；起重機吊鉤裝防滑舌片。</p>
-          <p><strong>(五) 跌倒：</strong>材料堆置整齊，不可佔用通道。</p>
-          <p><strong>(六) 衝撞、被撞：</strong>起重機操作避免搖晃；舉重物下坡放慢腳步不可跑步。</p>
-          <p><strong>(七) 夾、捲、切、割、擦傷：</strong>機械傳動部設護罩；作業前檢查試運轉，保持安全距離，故障立即停機。</p>
-          <p><strong>(八) 火災：</strong>易燃處及禁火場所嚴禁吸菸明火；焊接下方移開易燃物或舖蓋防火毯。</p>
-          <p><strong>(九) 爆炸：</strong>氣體鋼瓶豎立固定；可燃氣體與氧氣分開儲存；挖破管線立即通報並設置警戒嚴禁煙火；注意地下管線位置。</p>
-          <p><strong>(十) 缺氧：</strong>依「缺氧症預防規則」辦理；作業前測定氧氣含量(需≧18%)；進入人孔/管道前先行通風換氣。</p>
-          <p><strong>(十一) 交通事故：</strong>營建車輛進入工地依速限(如20km/hr)行駛，必要時設指揮人員；工區行走避免跑步。</p>
-          <p><strong>(十二) 物體破裂：</strong>吊運易碎物品特別小心避免碰撞。</p>
-          <p><strong>(十三) 踩踏：</strong>高度超過1.5M之場所應設置安全上下設備(樓梯、爬梯)。</p>
-          <p><strong>(十四) 與有害物接觸：</strong>落實缺氧危險場所規定；缺氧空間須完成進出申請、通風換氣、點名確認與紀錄管制。</p>
-          <p><strong>(十五) 鄰水危害：</strong>備妥救生設施與通訊器材；建立作業連絡系統；獲知水位暴漲或土石流迅即撤離。</p>
-          <p><strong>(十六) 出水砂湧/溺斃：</strong>確認地下水位，隨時採取抽水防災；設置安全升降設備與救生裝備供退避。</p>
-          <p><strong>(十七) 熱危害：</strong>高溫炎熱保持通風與水分補充；指派專人巡視；設置休息場所；穿著吸濕透氣工作服；實施危害預防訓練。</p>
-          <p><strong>(十八) 其他：</strong>低溫注意保暖及心血管疾病，禁飲酒精飲料；落實職安法第18條有立即危險之虞時退避至安全場所。</p>
+      <!-- 四、危害防止措施（動態連動顯示） -->
+      <div class="border rounded-lg p-4 bg-slate-50">
+        <label class="font-bold text-slate-800 block mb-2 text-sm md:text-base">四、危害防止措施</label>
+        <div id="dynamicPreventionUI" class="text-xs text-slate-700 space-y-3 leading-relaxed max-h-80 overflow-y-auto">
+          <!-- 這裡會由 JavaScript 動態填入 -->
         </div>
-      </details>
+        <!-- 隱藏欄位，用來儲存要印進 PDF 的純文字 -->
+        <input type="hidden" id="preventionMeasuresData" name="preventionMeasuresData" value="">
+      </div>
 
 <!-- 施工人員簽名區 -->
       <div class="border-t pt-4">
@@ -230,7 +215,64 @@
 
     // 取得網址列上的表單 ID (例如: index.html?id=DOC-12345)
     const urlParams = new URLSearchParams(window.location.search);
-    let currentFormId = urlParams.get('id');
+   // 危害防止措施字典對應表
+    const preventionDict = {
+      "墜落、滾落": "(一)墜落、滾落\n1.承攬勞工從事高架作業時，應依行政院勞動部頒布之「高架作業勞工保護措施標準」辦理。\n2.距2M以上地面或牆面口部分應設置護欄或護蓋；構台、工作台四周應設置護欄；樓梯、階梯側邊應設置扶手。\n3.勞工於未設置工作平台、護欄等處從事高架作業時，應嚴格監督佩戴安全帶，必要時其下方並設置安全網。\n4.勞工有下列情事之ㄧ者，承攬人不得使其從事作業，酒醉或有酒醉之虞者、身體虛弱，經醫師診斷認為身體狀況不良者、情緒不穩定，有安全顧慮者、勞工自覺不適從事該項工作者及其他經主管人員認定者。",
+      "感電": "(二)感電\n1.各承攬人使用之電工具設備、電線等，於使用前應詳加檢查，不合格不得使用。\n2.本工地之電源開關所設置之漏電斷路器，不得任意拆卸、破壞，其用電設備之電路，必需經過漏電斷路器。\n3.本工地如有臨近高壓電線，應向台電申請裝設絕緣套管，各承攬人進行吊舉、搬運物料時，應小心避免碰觸。\n4.承攬人自行拉設之電線，應予架高，並加掛標示、通路上電線防護。\n5.其他預防施工現場發生感電危害之必要措施。",
+      "崩(倒)塌": "(三)崩(倒)塌\n1.支撐材料應以支撐形狀，預期荷重及混凝土澆置方法等設計，材料有明顯損傷、變形或腐蝕者，不得使用。\n2.物料應整齊堆放於平整地面，注意堆放方式且根據物料特性進行堆放高度限制，確保物料堆放穩固性。\n3.其他預防施工現場發生崩(倒)塌之必要措施。",
+      "物體飛落": "(四)物體飛落\n1.承攬人於高處作業時，應先整頓工作環境，避免物件掉落，擊傷下方人員。\n2.各承攬人應嚴格督促所僱勞工進入工作區應配戴安全帽，扣好顎帶。\n3.承攬人於高處作業有物體墜落之虞時，應設置擋版、斜離或防護網，並嚴禁由上方往下方丟擲物料。\n4.起重機之吊鉤，應裝設防滑舌片，以防掉物脫落，並嚴禁勞工從吊舉物下方通過。",
+      "跌倒": "(五)跌倒\n1.施工用材料堆置，應排放整齊，不可佔用通道及防害勞工動作。",
+      "衝撞、被撞": "(六)衝撞、被撞\n1.起重機作業手吊舉物件時，應謹慎操作避免搖晃，致撞及人員或物品。\n2.舉重物下坡時，應放慢腳步，不可跑步，避免撞傷別人。",
+      "夾/捲/切/割/擦傷": "(七)夾、捲、切、割、擦傷\n1.工地使用之機械，如有傳動帶、傳動輪、齒輪、轉軸等有使勞工夾、捲擦傷者，應設護罩或護欄。\n2.作業前，應妥善檢查施工機具是否正常，確實實施試運轉，作業時，注意與周遭人員保持一定距離及依規定使用相關作業機具，若有發生機具故障，立即停止作業，預防發生夾、捲、切、割、擦傷之危害。",
+      "火災": "(八)火災\n1.嚴禁勞工於倉庫及易燃物品堆放處或有「禁火」場所吸菸及使用明火。\n2.焊接作業時，下方如有易燃物品，應予移開或舖蓋防火毯。",
+      "爆炸": "(九)爆炸\n1.乙炔、氧氣鋼瓶應豎立放置，並加以固定。\n2.高壓氣體容器與空容器應分區放置。可燃性氣體及氧氣鋼瓶應分開儲存。\n3.工地開挖，如不慎挖破瓦斯管路致洩氣時，應即電請瓦斯公司派員處理，設置警戒，嚴禁一切煙火。\n4.開挖過程中，注意地下管線位置，避免造成危害。",
+      "缺氧": "(十)缺氧\n1.承攬僱用勞工於缺氧危險場所作業時，應依行政院勞動部頒布之「缺氧症預防規則」之規定辦理。\n2.承攬僱用勞工於缺氧危險場所作業前，應先測定各該作業場所空氣中氧氣含量低於18%時，應禁止勞工進入。\n3.勞工進入涵洞、人孔、管道、隧道等缺氧危險性工作場所前，應先行通風換氣。",
+      "交通事故": "(十一)交通事故\n1.營建車輛進入工地時，應按規定時速(如20km/hr)謹慎駕駛，必要時並應設置指揮人員。\n2.勞工於工區行走時，應避免跑步，並注意行駛中車輛。",
+      "物體破裂": "(十二)物體破裂\n1.吊運易碎物品時，應特別小心，避免碰撞破裂，擊傷下方人員。",
+      "踩踏": "(十三)踩踏\n1.高度超過1.5M之工作場所，承攬人應設置樓梯、爬梯等可供勞工安全上、下之設備。",
+      "局限空間": "(十四)與有害物接觸\n1.承攬僱用勞工於缺氧危險場所作業時，應依行政院勞動部頒布之「缺氧症預防規則」之規定辦理。\n2.承攬僱用勞工於缺氧危險場所作業前，應先測定各該作業場所空氣中氧氣含量低於18%時，應禁止勞工進入。\n3.勞工進入人孔、管道等缺氧危險性工作場所前，應先行通風換氣。\n4.勞工進出缺氧空間前須完成進出局限空間申請，並確實填寫進出局限空間紀錄表，經點名確認後方可進入作業，離開局限空間後，再次確實填寫進出局限空間紀錄表，並向現場人員完成報備。",
+      "鄰水危害": "(十五)鄰水危害\n1.臨河作業環境應備有救生設施、設置緊急聯絡器材，並定期實施檢點以保持設施性能。\n2.應建立作業連絡系統，包括無線連絡器材、連絡信號、連絡人員等。\n3.獲知上游河川水位暴漲或土石流時，應即通知作業勞工迅即撤離。",
+      "出水砂湧/溺斃": "(十六)出水砂湧/溺斃：\n1.應確認地下水位情況，隨時採取抽水防災處理措施，及置備足夠抽水能力之設備。\n2.應設置安全升降之設備，預備繩索、梯子、救生圈、救生衣等供勞工於情況危急時能及時退避。",
+      "熱危害": "(十七)熱危害：\n1. 天氣高溫炎熱時，應盡量保持通風，適當休息及注意水份補充。\n2. 於戶外未遮蔽處執行作業時，承攬商應於作業前及作業期間指派專人定期巡視，確認各項危害預防及管理措施。\n3. 勞工有身體不適或疑似產生相關熱疾病症狀時，應立即停止作業，確認其狀況並尋求協助及通報。\n4. 勞工於休息時可降低體心溫度及恢復體力，應設置相關休息場所。\n5. 勞工應著適當工作服裝，如：淺色、寬鬆、具良好吸濕性、透氣性、耐磨且穿著舒適之工作服，及通風良好之帽子或頭盔；但紫外線指數過高時，則建議穿著長袖工作服。\n6. 從事戶外高氣溫環境作業，針對現場主管及作業勞工定期實施危害預防教育訓練，以避免熱危害發生。\n7. 其餘未詳列者，應依高氣溫戶外作業勞工熱危害預防指引及其他相關法令(含新修訂)辦理。"
+    };
+
+    const fixedOther = "(十八)其他\n1.天氣低溫寒冷時，應注意保暖，禁止飲用酒精性飲料，並注意因心血管疾病所引起之危害。\n2.宣導職業安全衛生法第18條「工作場所有立即發生危險之虞時，使勞工退避至安全場所。」";
+
+    function updatePreventionUI() {
+      const checkedHazards = Array.from(document.querySelectorAll('input[name="hazards"]:checked')).map(cb => cb.value);
+      const container = document.getElementById('dynamicPreventionUI');
+      
+      let htmlContent = '';
+      let plainText = '';
+      
+      checkedHazards.forEach(hazard => {
+        if (preventionDict[hazard]) {
+          htmlContent += `<p class="whitespace-pre-wrap mb-3 text-slate-800">${preventionDict[hazard]}</p>`;
+          plainText += preventionDict[hazard] + '\n\n';
+        }
+      });
+      
+      // 無論如何，都會把 (十八) 其他 給固定加上去
+      htmlContent += `<div class="border-t pt-2 mt-2 border-slate-300"><p class="whitespace-pre-wrap text-slate-800 font-medium">${fixedOther}</p></div>`;
+      plainText += fixedOther;
+      
+      if (checkedHazards.length === 0) {
+        container.innerHTML = `<p class="text-slate-500 mb-3 text-center">👇 請於上方勾選「可能之危害」，對應之防止措施將顯示於此。</p><div class="border-t pt-2 mt-2 border-slate-300"><p class="whitespace-pre-wrap text-slate-800 font-medium">${fixedOther}</p></div>`;
+      } else {
+        container.innerHTML = htmlContent;
+      }
+      
+      // 將最終要印的純文字，塞進隱藏欄位打包
+      document.getElementById('preventionMeasuresData').value = plainText;
+    }
+
+    // 網頁載入時，先執行一次讓畫面顯示預設的「其他」
+    window.addEventListener('load', updatePreventionUI);
+  let currentFormId = urlParams.get('id');
+
+document.querySelectorAll('input[name="hazards"]').forEach(cb => {
+      cb.addEventListener('change', updatePreventionUI);
+    });
 
     // 自動填入今日日期 (如果是新單)
     if (!currentFormId) {
@@ -337,6 +379,7 @@
           checkCheckboxes('workType', data.workType);
           checkCheckboxes('workItems', data.workItems);
           checkCheckboxes('hazards', data.hazards);
+          updatePreventionUI(); // 確保草稿載入時，防護措施畫面也跟著展開
 
           // 重新畫上簽名
           loadCanvasImage('sig1', data.sigSafety);
@@ -380,6 +423,7 @@
         workType: formData.getAll('workType').join(', '),
         workItems: formData.getAll('workItems').join(', '),
         hazards: formData.getAll('hazards').join(', '),
+        preventionMeasures: document.getElementById('preventionMeasuresData').value,
         suggestions: formData.get('suggestions') || '無',
         sigSafety: document.getElementById('sig1').toDataURL(),
         sigSupervisor: document.getElementById('sig2').toDataURL(),
