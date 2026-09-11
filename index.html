@@ -247,8 +247,11 @@
       
       checkedHazards.forEach(hazard => {
         if (preventionDict[hazard]) {
-          htmlContent += `<p class="whitespace-pre-wrap mb-3 text-slate-800">${preventionDict[hazard]}</p>`;
-          plainText += preventionDict[hazard] + '\n\n';
+          // 網頁畫面的段落間距也同步縮小 (將原本的 mb-3 改為 mb-1)
+          htmlContent += `<p class="whitespace-pre-wrap mb-1 text-slate-800">${preventionDict[hazard]}</p>`;
+          
+          // 消除 PDF 中的多餘空行：將 '\n\n' 改為單一換行 '\n'
+          plainText += preventionDict[hazard] + '\n';
         }
       });
       
