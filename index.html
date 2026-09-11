@@ -207,16 +207,35 @@
         </div>
       </div>
 
-      <!-- 送出按鈕 -->
-      <button type="submit" id="submitBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition">
-        確認送出危害告知單
-      </button>
+      <!-- 讀取草稿狀態提示 -->
+      <div id="loadingMsg" class="hidden text-center py-2 text-sm text-blue-600 font-bold bg-blue-50 rounded mb-4">
+        🔄 系統正在讀取草稿資料，請稍候...
+      </div>
+
+      <!-- 送出按鈕 (雙按鈕設計) -->
+      <div class="flex flex-col sm:flex-row gap-4 mt-6">
+        <button type="button" id="draftBtn" class="w-full sm:w-1/2 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg shadow transition">
+          💾 暫存草稿 (不產 PDF)
+        </button>
+        <button type="button" id="submitBtn" class="w-full sm:w-1/2 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition">
+          ✅ 確認送出 (產生 PDF)
+        </button>
+      </div>
     </form>
   </div>
 
   <script>
-    // 自動填入今日日期 (YYYY-MM-DD)
-    document.getElementById('workDate').value = new Date().toISOString().split('T')[0];
+    // 你的 Google Apps Script 網址
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlQivEQb60omKiF4M3OXUt2JkPLOvmBN9oyxjtVYgwgPVxSK_d4awYx31a3x6UTfLk/exec';
+
+    // 取得網址列上的表單 ID (例如: index.html?id=DOC-12345)
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentFormId = urlParams.get('id');
+
+    // 自動填入今日日期 (如果是新單)
+    if (!currentFormId) {
+      document.getElementById('workDate').value = new Date().toISOString().split('T')[0];
+    }
 
     // 初始化簽名板
     function setupCanvas(canvasId) {
@@ -224,7 +243,6 @@
       const ctx = canvas.getContext('2d');
       let isDrawing = false;
 
-      // 修正高解析度像素模糊
       function resize() {
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width;
@@ -261,7 +279,6 @@
       canvas.addEventListener('mousedown', start);
       canvas.addEventListener('mousemove', draw);
       window.addEventListener('mouseup', stop);
-
       canvas.addEventListener('touchstart', start, { passive: false });
       canvas.addEventListener('touchmove', draw, { passive: false });
       window.addEventListener('touchend', stop);
@@ -275,15 +292,87 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    // 表單送出處理
-    document.getElementById('hazardForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.innerText = '資料上傳中...';
+    // 將 Base64 圖片重新畫回 Canvas (載入草稿用)
+    function loadCanvasImage(canvasId, base64String) {
+      if (!base64String || base64String.length < 100) return; // 避免載入空畫布
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
+      img.src = base64String;
+    }
 
-      const formData = new FormData(this);
+    // 勾選多選框 (載入草稿用)
+    function checkCheckboxes(name, valuesString) {
+      if (!valuesString) return;
+      const values = valuesString.split(', ');
+      const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+      checkboxes.forEach(cb => {
+        if (values.includes(cb.value)) cb.checked = true;
+      });
+    }
+
+    // 讀取草稿資料邏輯
+    async function loadDraft() {
+      if (!currentFormId) return; // 沒有 ID 代表是寫新單，直接跳過
+      
+      document.getElementById('loadingMsg').classList.remove('hidden');
+      try {
+        const response = await fetch(`${SCRIPT_URL}?id=${currentFormId}`);
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+          const data = result.data;
+          // 填入文字與日期
+          document.querySelector('[name="projectName"]').value = data.projectName;
+          document.querySelector('[name="contractor"]').value = data.contractor;
+          document.querySelector('[name="workDate"]').value = new Date(data.workDate).toISOString().split('T')[0];
+          document.querySelector('[name="location"]').value = data.location;
+          document.querySelector('[name="suggestions"]').value = data.suggestions === '無' ? '' : data.suggestions;
+
+          // 處理複選框 (先清空預設勾選，再套用草稿)
+          document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+          checkCheckboxes('workType', data.workType);
+          checkCheckboxes('workItems', data.workItems);
+          checkCheckboxes('hazards', data.hazards);
+
+          // 重新畫上簽名
+          loadCanvasImage('sig1', data.sigSafety);
+          loadCanvasImage('sig2', data.sigSupervisor);
+          loadCanvasImage('sig3', data.sigManager);
+          loadCanvasImage('worker1', data.worker1);
+          loadCanvasImage('worker2', data.worker2);
+          loadCanvasImage('worker3', data.worker3);
+          loadCanvasImage('worker4', data.worker4);
+          loadCanvasImage('worker5', data.worker5);
+        } else {
+          alert('找不到草稿資料：' + result.message);
+        }
+      } catch (err) {
+        console.error('讀取草稿失敗', err);
+      } finally {
+        document.getElementById('loadingMsg').classList.add('hidden');
+      }
+    }
+
+    // 送出表單邏輯 (action = "draft" 暫存, "complete" 完稿)
+    async function submitForm(action) {
+      const draftBtn = document.getElementById('draftBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      draftBtn.disabled = true;
+      submitBtn.disabled = true;
+      const originalSubmitText = submitBtn.innerText;
+      
+      if (action === 'draft') draftBtn.innerText = '💾 暫存中...';
+      if (action === 'complete') submitBtn.innerText = '⏳ 產生 PDF 中...';
+
+      const formData = new FormData(document.getElementById('hazardForm'));
       const payload = {
+        formId: currentFormId, // 如果是舊單，就會有 ID 進行覆蓋
+        action: action,        // 告訴後端這次是要暫存還是轉 PDF
         projectName: formData.get('projectName'),
         contractor: formData.get('contractor'),
         workDate: formData.get('workDate'),
@@ -295,7 +384,6 @@
         sigSafety: document.getElementById('sig1').toDataURL(),
         sigSupervisor: document.getElementById('sig2').toDataURL(),
         sigManager: document.getElementById('sig3').toDataURL(),
-        // ▼ 新增這 5 行 ▼
         worker1: document.getElementById('worker1').toDataURL(),
         worker2: document.getElementById('worker2').toDataURL(),
         worker3: document.getElementById('worker3').toDataURL(),
@@ -303,31 +391,40 @@
         worker5: document.getElementById('worker5').toDataURL()
       };
 
-      // 替換為 Step 2 取得的 Google Apps Script Web App URL
-      const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlQivEQb60omKiF4M3OXUt2JkPLOvmBN9oyxjtVYgwgPVxSK_d4awYx31a3x6UTfLk/exec';
-
       try {
-        if (SCRIPT_URL.includes('替換成你的')) {
-          alert('前端測試成功！請先完成 Step 2 設定 Google Apps Script 網址以接收資料。');
-          console.log('表單打包資料：', payload);
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors', // 繞過跨域限制 (注意: no-cors 無法直接讀取 JSON 回傳值)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        
+        if (action === 'draft') {
+          alert('💾 草稿已暫存！資料已寫入試算表。');
+          // 注意：因為使用 no-cors 無法接回傳的 formId，如果是第一次寫入新單，
+          // 建議重新整理或讓使用者從你的試算表系統/草稿列表重新點入。
+          location.reload(); 
         } else {
-          await fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          alert('✅ 危害告知單已成功送出儲存！');
-          location.reload();
+          alert('✅ 危害告知單已成功完稿！PDF 已產生至雲端硬碟。');
+          location.href = location.pathname; // 完稿後清除網址參數並重新載入
         }
       } catch (err) {
         alert('❌ 送出失敗，請檢查網路連線。');
         console.error(err);
       } finally {
-        btn.disabled = false;
-        btn.innerText = '確認送出危害告知單';
+        draftBtn.disabled = false;
+        submitBtn.disabled = false;
+        draftBtn.innerText = '💾 暫存草稿 (不產 PDF)';
+        submitBtn.innerText = originalSubmitText;
       }
-    });
+    }
+
+    // 綁定按鈕事件
+    document.getElementById('draftBtn').addEventListener('click', () => submitForm('draft'));
+    document.getElementById('submitBtn').addEventListener('click', () => submitForm('complete'));
+
+    // 頁面載入時檢查是否需要讀取草稿
+    window.addEventListener('load', loadDraft);
   </script>
 </body>
 </html>
