@@ -54,57 +54,108 @@
         <p>6. 承商確實巡查工地之安衛，並將缺失確實回報，以利安衛管理維護及確保施工人員生命、財產。</p>
       </div>
 
-      <!-- 二、作業項目 -->
+     <!-- 二、作業項目 -->
       <div class="border rounded-lg p-4">
         <label class="font-bold text-slate-800 block mb-2 text-sm md:text-base">二、本日作業項目（請勾選）</label>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
-          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="吊裝、搬運" class="rounded"><span>1. 吊裝、搬運</span></label>
-          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="焊接、切割" class="rounded"><span>2. 焊接、切割</span></label>
-          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="局限作業" class="rounded" checked><span>3. 局限作業</span></label>
-          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="高處作業" class="rounded"><span>4. 高處作業</span></label>
-          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="機械設備作業" class="rounded" checked><span>5. 機械設備作業</span></label>
-          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="其他" class="rounded"><span>其他</span></label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-sm">
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="高架作業" class="rounded"><span>1. 高架作業</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="組、拆模" class="rounded"><span>2. 組、拆模</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="路面切割" class="rounded"><span>3. 路面切割</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="施工架組立、拆卸" class="rounded"><span>4. 施工架組立、拆卸</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="鋼筋組立" class="rounded"><span>5. 鋼筋組立</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="物料切割" class="rounded"><span>6. 物料切割</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="焊接" class="rounded"><span>7. 焊接</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="局限作業" class="rounded"><span>8. 局限作業</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="開挖作業" class="rounded"><span>9. 開挖作業</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="吊裝、搬運" class="rounded"><span>10. 吊裝、搬運</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="擋土支撐架設" class="rounded"><span>11. 擋土支撐架設</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="混凝土澆置" class="rounded"><span>12. 混凝土澆置</span></label>
+          <label class="flex items-center space-x-2"><input type="checkbox" name="workItems" value="其他" class="rounded"><span>13. 其他</span></label>
         </div>
       </div>
 
       <!-- 三、可能之危害 -->
       <div class="border rounded-lg p-4">
         <label class="font-bold text-slate-800 block mb-2 text-sm md:text-base">三、可能之危害（請勾選）</label>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs md:text-sm">
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="崩(倒)塌"><span>1. 崩(倒)塌</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="滑倒、跌倒"><span>2. 滑倒、跌倒</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="衝撞、被撞"><span>3. 衝撞、被撞</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="交通事故"><span>4. 交通事故</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="感電"><span>5. 感電</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="爆炸"><span>6. 爆炸</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="熱危害"><span>7. 熱危害</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="墜落、滾落"><span>9. 墜落、滾落</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="夾/捲/切/割/擦傷"><span>10. 夾/捲/切/割/擦傷</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="物體飛落"><span>11. 物體飛落</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="與有害物接觸" checked><span>12. 與有害物接觸</span></label>
-          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="出水砂湧/溺斃" checked><span>13. 出水砂湧/溺斃</span></label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-xs md:text-sm">
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="墜落、滾落"><span>1. 墜落、滾落</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="感電"><span>2. 感電</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="崩(倒)塌"><span>3. 崩(倒)塌</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="物體飛落"><span>4. 物體飛落</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="跌倒"><span>5. 跌倒</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="衝撞、被撞"><span>6. 衝撞、被撞</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="夾/捲/切/割/擦傷"><span>7. 夾/捲/切/割/擦傷</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="火災"><span>8. 火災</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="爆炸"><span>9. 爆炸</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="缺氧"><span>10. 缺氧</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="交通事故"><span>11. 交通事故</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="物體破裂"><span>12. 物體破裂</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="踩踏"><span>13. 踩踏</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="局限空間"><span>14. 局限空間</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="鄰水危害"><span>15. 鄰水危害</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="出水砂湧/溺斃"><span>16. 出水砂湧/溺斃</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="熱危害"><span>17. 熱危害</span></label>
+          <label class="flex items-center space-x-1.5"><input type="checkbox" name="hazards" value="其他"><span>18. 其他</span></label>
         </div>
       </div>
 
       <!-- 四、危害防止措施（可收合摺疊） -->
       <details class="border rounded-lg p-3 bg-slate-50 cursor-pointer">
         <summary class="font-bold text-sm text-slate-700">點擊查看：四、各項危害詳細防止措施條款</summary>
-        <div class="mt-3 text-xs text-slate-600 space-y-2 leading-relaxed max-h-60 overflow-y-auto border-t pt-2">
-          <p><strong>(一) 崩(倒)塌：</strong>支撐材料應依荷重設計，物料堆放穩固限制高度。</p>
-          <p><strong>(二) 滑倒、跌倒：</strong>物料堆置整齊，嚴禁佔用通道。</p>
-          <p><strong>(三) 衝撞、被撞：</strong>起重機吊舉應謹慎避免搖晃。</p>
-          <p><strong>(四) 交通事故：</strong>工區速限20km/hr，設引導人員，人員嚴禁奔跑。</p>
-          <p><strong>(五) 感電：</strong>電工具檢查合格、必經漏電斷路器、高壓線設絕緣套管、電線架高。</p>
-          <p><strong>(六) 爆炸：</strong>挖破瓦斯管立即通報警戒嚴禁煙火，注意地下管線。</p>
-          <p><strong>(七) 熱危害：</strong>通風補水、專人巡視、設置休息場所、穿著吸濕透氣工作服。</p>
-          <p><strong>(九) 墜落、滾落：</strong>2米以上設護欄/安全網，確實扣掛安全帶，嚴禁飲酒上工。</p>
-          <p><strong>(十) 夾捲切割：</strong>機械傳動部設護罩，作業保持距離，異常立即停機。</p>
-          <p><strong>(十一) 物體飛落：</strong>戴妥安全帽，高處設防護網/擋板，吊鉤裝防滑舌片。</p>
-          <p><strong>(十二) 與有害物接觸：</strong>缺氧作業前測定(氧氣需≧18%)，落實通風及局限空間進出管制紀錄。</p>
-          <p><strong>(十三) 出水砂湧/溺斃：</strong>隨時監測地下水抽水防災，備妥逃生繩索、梯子與救生裝備。</p>
-          <p><strong>(十四) 其他：</strong>低溫防寒，落實職安法第18條有危險之虞即時退避。</p>
+        <div class="mt-3 text-xs text-slate-600 space-y-3 leading-relaxed max-h-80 overflow-y-auto border-t pt-2 pr-2">
+          <p><strong>(一) 墜落、滾落：</strong>依「高架作業勞工保護措施標準」辦理；距2M以上設置護欄/護蓋；必要時設安全網；勞工身心不適或酒醉嚴禁作業。</p>
+          <p><strong>(二) 感電：</strong>電工具使用前檢查；必經漏電斷路器；臨近高壓電線申請絕緣套管；自行拉設之電線應架高並加掛標示。</p>
+          <p><strong>(三) 崩(倒)塌：</strong>支撐材料依荷重設計；物料平整堆放並限制高度，確保穩固性。</p>
+          <p><strong>(四) 物體飛落：</strong>高處作業整頓環境；配戴安全帽並扣好顎帶；設置擋版/防護網嚴禁向下丟擲；起重機吊鉤裝防滑舌片。</p>
+          <p><strong>(五) 跌倒：</strong>材料堆置整齊，不可佔用通道。</p>
+          <p><strong>(六) 衝撞、被撞：</strong>起重機操作避免搖晃；舉重物下坡放慢腳步不可跑步。</p>
+          <p><strong>(七) 夾、捲、切、割、擦傷：</strong>機械傳動部設護罩；作業前檢查試運轉，保持安全距離，故障立即停機。</p>
+          <p><strong>(八) 火災：</strong>易燃處及禁火場所嚴禁吸菸明火；焊接下方移開易燃物或舖蓋防火毯。</p>
+          <p><strong>(九) 爆炸：</strong>氣體鋼瓶豎立固定；可燃氣體與氧氣分開儲存；挖破管線立即通報並設置警戒嚴禁煙火；注意地下管線位置。</p>
+          <p><strong>(十) 缺氧：</strong>依「缺氧症預防規則」辦理；作業前測定氧氣含量(需≧18%)；進入人孔/管道前先行通風換氣。</p>
+          <p><strong>(十一) 交通事故：</strong>營建車輛進入工地依速限(如20km/hr)行駛，必要時設指揮人員；工區行走避免跑步。</p>
+          <p><strong>(十二) 物體破裂：</strong>吊運易碎物品特別小心避免碰撞。</p>
+          <p><strong>(十三) 踩踏：</strong>高度超過1.5M之場所應設置安全上下設備(樓梯、爬梯)。</p>
+          <p><strong>(十四) 與有害物接觸：</strong>落實缺氧危險場所規定；缺氧空間須完成進出申請、通風換氣、點名確認與紀錄管制。</p>
+          <p><strong>(十五) 鄰水危害：</strong>備妥救生設施與通訊器材；建立作業連絡系統；獲知水位暴漲或土石流迅即撤離。</p>
+          <p><strong>(十六) 出水砂湧/溺斃：</strong>確認地下水位，隨時採取抽水防災；設置安全升降設備與救生裝備供退避。</p>
+          <p><strong>(十七) 熱危害：</strong>高溫炎熱保持通風與水分補充；指派專人巡視；設置休息場所；穿著吸濕透氣工作服；實施危害預防訓練。</p>
+          <p><strong>(十八) 其他：</strong>低溫注意保暖及心血管疾病，禁飲酒精飲料；落實職安法第18條有立即危險之虞時退避至安全場所。</p>
         </div>
       </details>
+
+<!-- 施工人員簽名區 -->
+      <div class="border-t pt-4">
+        <label class="font-bold text-slate-800 block mb-2 text-sm md:text-base">受告知人（施工人員）簽名</label>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+          <!-- 勞工 1~5 -->
+          <div class="border rounded-lg p-2 bg-white text-center">
+            <span class="text-xs text-slate-700 block mb-1">人員 1</span>
+            <canvas id="worker1" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker1')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          </div>
+          <div class="border rounded-lg p-2 bg-white text-center">
+            <span class="text-xs text-slate-700 block mb-1">人員 2</span>
+            <canvas id="worker2" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker2')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          </div>
+          <div class="border rounded-lg p-2 bg-white text-center">
+            <span class="text-xs text-slate-700 block mb-1">人員 3</span>
+            <canvas id="worker3" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker3')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          </div>
+          <div class="border rounded-lg p-2 bg-white text-center">
+            <span class="text-xs text-slate-700 block mb-1">人員 4</span>
+            <canvas id="worker4" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker4')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          </div>
+          <div class="border rounded-lg p-2 bg-white text-center">
+            <span class="text-xs text-slate-700 block mb-1">人員 5</span>
+            <canvas id="worker5" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker5')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          </div>
+        </div>
+      </div>
 
       <!-- 建議事項 -->
       <div>
@@ -198,7 +249,7 @@
       window.addEventListener('touchend', stop);
     }
 
-    ['sig1', 'sig2', 'sig3'].forEach(setupCanvas);
+    ['sig1', 'sig2', 'sig3', 'worker1', 'worker2', 'worker3', 'worker4', 'worker5'].forEach(setupCanvas);
 
     function clearCanvas(canvasId) {
       const canvas = document.getElementById(canvasId);
@@ -225,7 +276,13 @@
         suggestions: formData.get('suggestions') || '無',
         sigSafety: document.getElementById('sig1').toDataURL(),
         sigSupervisor: document.getElementById('sig2').toDataURL(),
-        sigManager: document.getElementById('sig3').toDataURL()
+        sigManager: document.getElementById('sig3').toDataURL(),
+        // ▼ 新增這 5 行 ▼
+        worker1: document.getElementById('worker1').toDataURL(),
+        worker2: document.getElementById('worker2').toDataURL(),
+        worker3: document.getElementById('worker3').toDataURL(),
+        worker4: document.getElementById('worker4').toDataURL(),
+        worker5: document.getElementById('worker5').toDataURL()
       };
 
       // 替換為 Step 2 取得的 Google Apps Script Web App URL
