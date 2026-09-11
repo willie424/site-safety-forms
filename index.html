@@ -37,11 +37,23 @@
           <label class="font-semibold block text-slate-700">施工地點 / 路段</label>
           <input type="text" name="location" placeholder="例如：中華路 / 孔門路" class="w-full mt-1 p-2 bg-white border rounded focus:ring-2 focus:ring-blue-500 outline-none" required>
         </div>
-        <div>
-          <label class="font-semibold block text-slate-700">施工項目</label>
-          <input type="text" name="workType" value="推進工程" class="w-full mt-1 p-2 bg-white border rounded text-slate-600 focus:ring-2 focus:ring-blue-500 outline-none" required>
+        
+        <!-- 施工項目（改成複選框） -->
+        <div class="md:col-span-2">
+          <label class="font-semibold block text-slate-700 mb-2">施工項目（可複選）</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm bg-white p-3 border rounded">
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="假設工程" class="rounded"><span>假設工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="試挖工程" class="rounded"><span>試挖工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="工作井工程" class="rounded"><span>工作井工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="推進工程" class="rounded" checked><span>推進工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="人孔收築工程" class="rounded"><span>人孔收築工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="滲漏水試驗工程" class="rounded"><span>滲漏水試驗工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="管道閉路電視檢視工程" class="rounded"><span>管道閉路電視檢視工程</span></label>
+            <label class="flex items-center space-x-2"><input type="checkbox" name="workType" value="瀝青混凝土鋪築工程" class="rounded"><span>瀝青混凝土鋪築工程</span></label>
+          </div>
         </div>
       </div>
+      <!-- 基本資訊結束 -->
 
       <!-- 一、基本遵守事項 -->
       <div class="border rounded-lg p-4 bg-amber-50/50 border-amber-200 text-xs md:text-sm text-slate-700 space-y-1">
@@ -126,33 +138,39 @@
 
 <!-- 施工人員簽名區 -->
       <div class="border-t pt-4">
-        <label class="font-bold text-slate-800 block mb-2 text-sm md:text-base">受告知人（施工人員）簽名</label>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
-          <!-- 勞工 1~5 -->
-          <div class="border rounded-lg p-2 bg-white text-center">
-            <span class="text-xs text-slate-700 block mb-1">人員 1</span>
-            <canvas id="worker1" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
-            <button type="button" onclick="clearCanvas('worker1')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+        <label class="font-bold text-slate-800 block mb-3 text-sm md:text-base">受告知人（施工人員）簽名</label>
+        
+        <!-- 使用自動換行網格：手機單排、平板雙排/三排、大螢幕五排 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <!-- 勞工 1 -->
+          <div class="border rounded-lg p-3 bg-white text-center">
+            <span class="font-bold text-sm text-slate-700 block mb-1">人員 1</span>
+            <canvas id="worker1" class="border border-slate-300 rounded w-full h-28 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker1')" class="text-xs text-red-500 underline mt-1">清除重簽</button>
           </div>
-          <div class="border rounded-lg p-2 bg-white text-center">
-            <span class="text-xs text-slate-700 block mb-1">人員 2</span>
-            <canvas id="worker2" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
-            <button type="button" onclick="clearCanvas('worker2')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          <!-- 勞工 2 -->
+          <div class="border rounded-lg p-3 bg-white text-center">
+            <span class="font-bold text-sm text-slate-700 block mb-1">人員 2</span>
+            <canvas id="worker2" class="border border-slate-300 rounded w-full h-28 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker2')" class="text-xs text-red-500 underline mt-1">清除重簽</button>
           </div>
-          <div class="border rounded-lg p-2 bg-white text-center">
-            <span class="text-xs text-slate-700 block mb-1">人員 3</span>
-            <canvas id="worker3" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
-            <button type="button" onclick="clearCanvas('worker3')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          <!-- 勞工 3 -->
+          <div class="border rounded-lg p-3 bg-white text-center">
+            <span class="font-bold text-sm text-slate-700 block mb-1">人員 3</span>
+            <canvas id="worker3" class="border border-slate-300 rounded w-full h-28 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker3')" class="text-xs text-red-500 underline mt-1">清除重簽</button>
           </div>
-          <div class="border rounded-lg p-2 bg-white text-center">
-            <span class="text-xs text-slate-700 block mb-1">人員 4</span>
-            <canvas id="worker4" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
-            <button type="button" onclick="clearCanvas('worker4')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          <!-- 勞工 4 -->
+          <div class="border rounded-lg p-3 bg-white text-center">
+            <span class="font-bold text-sm text-slate-700 block mb-1">人員 4</span>
+            <canvas id="worker4" class="border border-slate-300 rounded w-full h-28 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker4')" class="text-xs text-red-500 underline mt-1">清除重簽</button>
           </div>
-          <div class="border rounded-lg p-2 bg-white text-center">
-            <span class="text-xs text-slate-700 block mb-1">人員 5</span>
-            <canvas id="worker5" class="border border-slate-300 rounded w-full h-20 bg-slate-50"></canvas>
-            <button type="button" onclick="clearCanvas('worker5')" class="text-[10px] text-red-500 underline mt-1">清除</button>
+          <!-- 勞工 5 -->
+          <div class="border rounded-lg p-3 bg-white text-center">
+            <span class="font-bold text-sm text-slate-700 block mb-1">人員 5</span>
+            <canvas id="worker5" class="border border-slate-300 rounded w-full h-28 bg-slate-50"></canvas>
+            <button type="button" onclick="clearCanvas('worker5')" class="text-xs text-red-500 underline mt-1">清除重簽</button>
           </div>
         </div>
       </div>
@@ -270,7 +288,7 @@
         contractor: formData.get('contractor'),
         workDate: formData.get('workDate'),
         location: formData.get('location'),
-        workType: formData.get('workType'),
+        workType: formData.getAll('workType').join(', '),
         workItems: formData.getAll('workItems').join(', '),
         hazards: formData.getAll('hazards').join(', '),
         suggestions: formData.get('suggestions') || '無',
